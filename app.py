@@ -1,12 +1,14 @@
-from flask import Flask, request, send_file, jsonify, url_for, abort
+import fnmatch
 import os
+
+from flask import Flask, request, send_file, jsonify, url_for, abort
 
 from models import db, File
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cdn.db'
 app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['ALLOWED_HOSTS'] = ['localhost', '127.0.0.1', 'www.sakanarm.com']
+app.config['ALLOWED_HOSTS'] = ['*']
 
 db.init_app(app)
 with app.app_context():
@@ -18,7 +20,12 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 @app.before_request
 def restrict_hosts():
     host = request.host.split(':')[0]
-    if host not in app.config['ALLOWED_HOSTS']:
+    flag = False
+    for pattern in app.config['ALLOWED_HOSTS']:
+        if fnmatch.fnmatch(host, pattern):
+            flag = True
+            break
+    if not flag:
         abort(403)
 
 
