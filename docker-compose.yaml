@@ -2,7 +2,8 @@ services:
   web:
     build: ./SakanaCDN
     volumes:
-      - data_volume:/home/SakanaCDN/web
+      - uploads:/home/SakanaCDN/web/uploads
+      - db_data:/home/SakanaCDN/web/instance
     expose:
       - 5000
   nginx:
@@ -13,4 +14,5 @@ services:
       - web
 
 volumes:
-  data_volume:
+  uploads:
+  db_data:

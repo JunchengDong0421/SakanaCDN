@@ -20,6 +20,8 @@ RUN addgroup --system skncdn && adduser --system --group skncdn
 ENV HOME=/home/SakanaCDN
 ENV APP_HOME=/home/SakanaCDN/web
 RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/uploads
+RUN mkdir $APP_HOME/instance
 WORKDIR $APP_HOME
 
 COPY --from=build /usr/src/SakanaCDN/wheels /wheels
