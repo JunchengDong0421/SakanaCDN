@@ -1,5 +1,5 @@
 # Single Dockerfile for all settings since small app
-FROM python:3.9-slim as build
+FROM python:3.9-slim AS build
 
 WORKDIR /usr/src/SakanaCDN
 
