@@ -31,17 +31,23 @@ def restrict_hosts():
 
 @app.route('/files/<filename>', methods=['POST'])
 def upload_file(filename):
+    existing_file = File.query.filter_by(filename=filename).first()
+    if existing_file:
+        return jsonify({'status': 1, 'error': 'File already exists'}), 409
     file = request.files.get('file')
     if not file:
         return jsonify({'status': 1, 'error': 'Invalid request'}), 400
 
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    file.save(filepath)
-    new_file = File(filename=filename, filepath=filepath)
-    db.session.add(new_file)
-    db.session.commit()
-    file_url = url_for('get_file', filename=filename, _external=True)
-    return jsonify({'status': 0, 'filepath': file_url}), 201
+    try:
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
+        new_file = File(filename=filename, filepath=filepath)
+        db.session.add(new_file)
+        db.session.commit()
+        file_url = url_for('get_file', filename=filename, _external=True)
+        return jsonify({'status': 0, 'filepath': file_url}), 201
+    except Exception as e:
+        return jsonify({'status': 1, 'error': str(e)}), 500
 
 
 @app.route('/files/<filename>', methods=['GET'])
@@ -63,12 +69,15 @@ def replace_file(filename):
     if not new_file:
         return jsonify({'status': 1, 'error': 'Invalid request'}), 400
 
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    new_file.save(filepath)
-    file.filepath = filepath
-    db.session.commit()
-    file_url = url_for('get_file', filename=filename, _external=True)
-    return jsonify({'status': 0, 'filepath': file_url}), 200
+    try:
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        new_file.save(filepath)
+        file.filepath = filepath
+        db.session.commit()
+        file_url = url_for('get_file', filename=filename, _external=True)
+        return jsonify({'status': 0, 'filepath': file_url}), 200
+    except Exception as e:
+        return jsonify({'status': 1, 'error': str(e)}), 500
 
 
 @app.route('/files/<filename>', methods=['DELETE'])
