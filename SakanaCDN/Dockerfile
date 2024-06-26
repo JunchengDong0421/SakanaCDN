@@ -35,4 +35,4 @@ RUN chown -R skncdn:skncdn $APP_HOME
 
 USER skncdn
 
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:5000"]
+CMD ["gunicorn", "app:app", "-c", "gunicorn.conf.py"]
