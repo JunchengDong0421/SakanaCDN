@@ -4,8 +4,10 @@ services:
     volumes:
       - uploads:/home/SakanaCDN/web/uploads
       - db_data:/home/SakanaCDN/web/instance
+      - logs:/home/SakanaCDN/web/logs
     expose:
       - 5000
+
   nginx:
     build: ./nginx
     ports:
@@ -16,3 +18,4 @@ services:
 volumes:
   uploads:
   db_data:
+  logs:

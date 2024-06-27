@@ -22,6 +22,7 @@ ENV APP_HOME=/home/SakanaCDN/web
 RUN mkdir $APP_HOME
 RUN mkdir $APP_HOME/uploads
 RUN mkdir $APP_HOME/instance
+RUN mkdir $APP_HOME/logs
 WORKDIR $APP_HOME
 
 COPY --from=build /usr/src/SakanaCDN/wheels /wheels
