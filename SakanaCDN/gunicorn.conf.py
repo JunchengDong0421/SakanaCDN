@@ -4,4 +4,3 @@ worker_class = "gevent"
 accesslog = "logs/access.log"
 errorlog = "logs/error.log"
 loglevel = "warning"
-
