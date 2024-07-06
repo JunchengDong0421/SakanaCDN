@@ -1,8 +1,7 @@
-# SakanaCDN
+# SakanaStorage
 
 ## Overwiew
-A simple service that implements RESTful APIs to store, replace, get and delete files. Not actually a CDN service but 
-just given the name.
+A simple storage service that implements RESTful APIs to store, replace, get and delete files.
 
 ## Getting Started
 **Use with [SakanaRM](https://github.com/JunchengDong0421/SakanaRM) only! For installation and usage guide, 

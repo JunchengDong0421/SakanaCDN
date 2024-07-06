@@ -1,10 +1,10 @@
 services:
   web:
-    build: ./SakanaCDN
+    build: ./SakanaStorage
     volumes:
-      - uploads:/home/SakanaCDN/web/uploads
-      - db_data:/home/SakanaCDN/web/instance
-      - logs:/home/SakanaCDN/web/logs
+      - uploads:/home/SakanaStorage/web/uploads
+      - db_data:/home/SakanaStorage/web/instance
+      - logs:/home/SakanaStorage/web/logs
     expose:
       - 5000
 
